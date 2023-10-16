@@ -1,1 +1,1 @@
-export { default } from './ClassComponent'
+export { default } from './ClassComponent' 
