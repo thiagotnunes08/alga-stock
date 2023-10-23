@@ -3,6 +3,7 @@ import './App.css';
 import Header from '../Header';
 import Button from '../../compartilhado/Button';
 import Container from '../../compartilhado/Container';
+import Input from '../../compartilhado/Input';
 
 function TestComponent() {
 
@@ -23,6 +24,7 @@ function App() {
           
           Alert
         </Button>
+        <Input label="Rua" placeholder="exemplo: Rua indianopolis 2663"/>
         </Container>
       </div>
   );
