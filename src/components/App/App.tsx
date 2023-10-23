@@ -17,15 +17,15 @@ function App() {
       <Header title="AlgaStock" />
 
       <Container>
-        <Button
-          onClick={() => window.alert('UIIIU')}
-          icone={<TestComponent/>}
-        >
+        <ul>
+        {
+        ['andressa','joao','lucas','mariana'].map((name,index)=> {
+
+          return <li key={index}>{name}</li>
           
-          Alert
-        </Button>
-        <Input label="Rua" placeholder="exemplo: Rua indianopolis 2663"/>
-        </Container>
+        })}
+        </ul>
+      </Container>
       </div>
   );
 }
