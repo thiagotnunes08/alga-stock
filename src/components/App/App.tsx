@@ -7,6 +7,7 @@ import Products from '../../compartilhado/Table/Table.mockdata';
 import Form from '../../compartilhado/Form';
 import Input from '../../compartilhado/Input';
 import Button from '../../compartilhado/Button';
+import ProdutoForm from '../Produtos/ProdutoForm';
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -24,14 +25,8 @@ function App() {
           headers={headers}
           data={Products}
         />
-      <Form title="formulário de produtos" onSubmit={console.log}>
-        <Input label='Nome' placeholder='ex: Pão'></Input>
-        <Input label='Preço' placeholder='ex: 0.50' type='number' min='0' step={'0.1'}></Input>
-        <Input label='Stock' type='number' min='0' placeholder='ex: 10'></Input>
-        <Button>
-        cadastrar
-        </Button>
-      </Form>
+
+      <ProdutoForm/>
 
       </Container>
     </div>
