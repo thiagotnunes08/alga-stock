@@ -15,7 +15,7 @@ const headers: TableHeader[] = [
 
 function App() {
   const [products, setProducts] = useState(Products)
-
+  const [updantingProduct,setUpdatingProduct] = useState<Product | undefined>(products[0])
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
       ...products,
@@ -32,6 +32,8 @@ function App() {
         ? newProduct
         : product
     ))
+
+    setUpdatingProduct(undefined)
   }
 
   return (
@@ -44,7 +46,7 @@ function App() {
         />
 
         <ProductForm
-          form={products[2]}
+          form={updantingProduct}
           onSubmit={handleProductSubmit}
           onUpdate={handleProductUpdate}
         />
