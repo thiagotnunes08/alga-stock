@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from '../Header';
 import Container from '../../compartilhado/Container';
 import Table, { TableHeader } from '../../compartilhado/Table';
 import Products from '../../compartilhado/Table/Table.mockdata';
-import Form from '../../compartilhado/Form';
-import Input from '../../compartilhado/Input';
-import Button from '../../compartilhado/Button';
-import ProdutoForm from '../Produtos/ProdutoForm';
+import ProdutoForm, { ProdutoRequest } from '../Produtos/ProdutoForm';
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -17,16 +14,33 @@ const headers: TableHeader[] = [
 ]
 
 function App() {
+
+  const [produtos, setProduto] = useState(Products)
+
+  const formatData = (produto: ProdutoRequest) => {
+    setProduto([
+      ...produtos,
+      {
+        id: produtos.length + 1,
+        ...produto
+
+      }
+
+    ])
+  }
+
   return (
     <div className="App">
       <Header title="AlgaStock" />
       <Container>
         <Table
           headers={headers}
-          data={Products}
+          data={produtos}
         />
 
-      <ProdutoForm/>
+        <ProdutoForm
+          onSubimit={formatData}
+        />
 
       </Container>
     </div>

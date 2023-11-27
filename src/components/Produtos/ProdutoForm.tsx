@@ -12,25 +12,53 @@ const initialFormState = {
 
 }
 
-const ProdutoForm = () => {
+export interface ProdutoRequest {
+
+    name: string
+    price: number
+    stock: number
+}
+
+declare interface ProdutoRequestProps {
+
+    onSubimit: (produto: ProdutoRequest) => void
+
+}
+
+const ProdutoForm: React.FC<ProdutoRequestProps> = (props) => {
 
     const [form, setForm] = useState(initialFormState)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-        const {value,name} = event.target
+        const { value, name } = event.target
 
         setForm({
             ...form,
-            [name]:value
+            [name]: value
         })
 
     }
 
-    return <Form title="formulário de produtos" onSubmit={()=>console.log(form)}>
+    const formatData = () => {
+
+        const proutoDTO = {
+            name: form.nome,
+            price: parseFloat(form.preco),
+            stock: Number(form.stock)
+
+        }
+
+        props.onSubimit(proutoDTO)
+        setForm(initialFormState)
+
+    }
+
+    return <Form title="formulário de produtos" onSubmit={formatData}>
 
         <Input
             onChange={handleInputChange}
+            value={form.nome}
             name='nome'
             label='Nome'
             placeholder='ex: Pão'
@@ -38,6 +66,7 @@ const ProdutoForm = () => {
         />
         <Input
             onChange={handleInputChange}
+            value={form.preco}
             name='preco'
             label='Preço'
             placeholder='ex: 0.50'
@@ -48,13 +77,14 @@ const ProdutoForm = () => {
         />
         <Input
             onChange={handleInputChange}
+            value={form.stock}
             name='stock'
             label='Stock'
             type='number' min='0'
             placeholder='ex: 10'
             required
-             />
-            
+        />
+
 
         <Button>cadastrar</Button>
     </Form>
