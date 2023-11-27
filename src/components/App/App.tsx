@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import './App.css';
 import Header from '../Header';
 import Container from '../../compartilhado/Container';
@@ -15,7 +16,7 @@ const headers: TableHeader[] = [
 
 function App() {
   const [products, setProducts] = useState(Products)
-  const [updantingProduct,setUpdatingProduct] = useState<Product | undefined>(products[0])
+  const [updantingProduct, setUpdatingProduct] = useState<Product | undefined>(products[0])
   const handleProductSubmit = (product: ProductCreator) => {
     setProducts([
       ...products,
@@ -36,6 +37,49 @@ function App() {
     setUpdatingProduct(undefined)
   }
 
+  const handleProductEdit = (product: Product) => {
+    setUpdatingProduct(product)
+  }
+
+  const handleProductDelete = (product: Product) => {
+    Swal
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#09f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Yes, delete ${product.name}!`
+      })
+      .then((result) => {
+        if (result.value) {
+          deleteProduct(product.id)
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+
+
+  }
+
+  const deleteProduct = (id: number) => {
+
+    setProducts(products.filter(p=> p.id != id))
+
+  }
+
+  const handleProductDetail = (product: Product) => {
+    Swal.fire(
+      'Product details',
+      `${product.name} costs $${product.price} and we have ${product.stock} available in stock.`,
+      'info'
+    )
+  }
+
   return (
     <div className="App">
       <Header title="AlgaStock" />
@@ -44,10 +88,10 @@ function App() {
           headers={headers}
           data={products}
           enableActions
-          onDelete={console.log}
-          onDetail={console.log}
-          onEdit={console.log}
-          
+          onDelete={handleProductDelete}
+          onDetail={handleProductDetail}
+          onEdit={handleProductEdit}
+
         />
 
         <ProductForm
