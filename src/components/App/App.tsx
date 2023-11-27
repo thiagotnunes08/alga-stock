@@ -3,8 +3,8 @@ import './App.css';
 import Header from '../Header';
 import Container from '../../compartilhado/Container';
 import Table, { TableHeader } from '../../compartilhado/Table';
-import Products from '../../compartilhado/Table/Table.mockdata';
-import ProdutoForm, { ProdutoRequest } from '../Produtos/ProdutoForm';
+import Products, { Product } from '../../compartilhado/Table/Table.mockdata';
+import ProductForm, { ProductCreator } from '../Produtos/ProdutoForm';
 
 const headers: TableHeader[] = [
   { key: 'id', value: '#' },
@@ -14,19 +14,24 @@ const headers: TableHeader[] = [
 ]
 
 function App() {
+  const [products, setProducts] = useState(Products)
 
-  const [produtos, setProduto] = useState(Products)
-
-  const formatData = (produto: ProdutoRequest) => {
-    setProduto([
-      ...produtos,
+  const handleProductSubmit = (product: ProductCreator) => {
+    setProducts([
+      ...products,
       {
-        id: produtos.length + 1,
-        ...produto
-
+        id: products.length + 1,
+        ...product
       }
-
     ])
+  }
+
+  const handleProductUpdate = (newProduct: Product) => {
+    setProducts(products.map(product =>
+      product.id === newProduct.id
+        ? newProduct
+        : product
+    ))
   }
 
   return (
@@ -35,13 +40,14 @@ function App() {
       <Container>
         <Table
           headers={headers}
-          data={produtos}
+          data={products}
         />
 
-        <ProdutoForm
-          onSubimit={formatData}
+        <ProductForm
+          form={products[2]}
+          onSubmit={handleProductSubmit}
+          onUpdate={handleProductUpdate}
         />
-
       </Container>
     </div>
   );

@@ -9,7 +9,7 @@ export interface Product {
     {
       id: 1,
       name: 'Cookie',
-      price: 1.25,
+      price: 1,
       stock: 20
     },
     {
