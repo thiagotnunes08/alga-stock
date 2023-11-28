@@ -68,19 +68,19 @@ const Table: React.FC<TableProps> = (props) => {
               && <td className="actions right">
                 {
                   props.onEdit &&
-                  <Button onClick={() => props.onEdit && props.onEdit(row)}>
+                  <Button onClick={() => props.onEdit && props.onEdit(row.$original)}>
                     editar
                   </Button>
                 }
                 {
                   props.onEdit &&
-                  <Button onClick={() => props.onDelete && props.onDelete(row)}>
+                  <Button onClick={() => props.onDelete && props.onDelete(row.$original)}>
                     deletar
                   </Button>
                 }
                 {
                   props.onEdit &&
-                  <Button onClick={() => props.onDetail && props.onDetail(row)}>
+                  <Button onClick={() => props.onDetail && props.onDetail(row.$original)}>
                     detalhar
                   </Button>
                 }
