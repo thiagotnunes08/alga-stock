@@ -6,7 +6,7 @@ import ProductForm, { ProductCreator } from '../Produtos/ProdutoForm';
 import Swal from 'sweetalert2'
 import { connect, useDispatch } from 'react-redux'
 import { criaNovoProduto, getProducts, updateProduct ,deletaProduto} from '../../redux/Produtos/Produtos.actions';
-import { RootState } from '../../redux';
+import { RootState, ThunkDispatch } from '../../redux';
 
 
 declare interface ProductCRUDProps {
@@ -24,51 +24,36 @@ const headers: TableHeader[] = [
 
 const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
 
-    const dispatch = useDispatch();
+    const dispatch:ThunkDispatch = useDispatch();
 
+    const alertDeErro = (error:Error) => {
 
-    // const [products, setProducts] = useState<Product[]>([])
+       return Swal.fire('Oops!', error.message, 'error')
+    }
+
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
-
-    async function fectData() {
-        try {
-          await dispatch(getProducts())
-        } catch (err) {
-          if (err instanceof Error) {
-            Swal.fire('Oops!', err.message, 'error')
-          }
-        }
-      }
 
     useEffect(() => {
         fectData()
     }, [])
 
-    const handleProductSubmit = async (product: ProductCreator) => {
-        try {
-          dispatch(criaNovoProduto(product))
+    async function fectData() {
+       
+           dispatch(getProducts()).catch(alertDeErro)
+      }
 
-        } catch (err) {
-          if (err instanceof Error) {
-            Swal.fire('Oops!', err.message, 'error')
-          }
-        }
+    const handleProductSubmit = async (product: ProductCreator) => {
+       
+          dispatch(criaNovoProduto(product)).catch(alertDeErro)
+    
       }
 
     const handleProductUpdate = async (newProduct: Product) => {
-        try {
-            await dispatch(updateProduct(newProduct))
-            setUpdatingProduct(undefined)
+    
+            dispatch(updateProduct(newProduct))
+            .then(() =>  setUpdatingProduct(undefined))
+            .catch(alertDeErro)
             dispatch(getProducts())
-        }
-        catch (err) {
-            if (err instanceof Error)
-                Swal.fire('Oops!', err.message, 'error')
-        }
-    }
-
-    const handleProductEdit = (product: Product) => {
-        setUpdatingProduct(product)
     }
 
     const handleProductDelete = (product: Product) => {
@@ -91,14 +76,9 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
 
     const deleteProduct = async (id: string) => {
 
-        try {
             await dispatch(deletaProduto(id))
-            Swal.fire('Uhul!', 'Produto deletado com sucesso', 'success')
-        }
-        catch (err) {
-            if (err instanceof Error)
-                Swal.fire('Oops!', err.message, 'error')
-        }
+            .then(()=> Swal.fire('Uhul!', 'Produto deletado com sucesso', 'success'))
+            .catch(alertDeErro)
     }
 
     const handleProductDetail = (product: Product) => {
@@ -109,7 +89,6 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
         )
     }
 
-
     return <>
         <Table
             headers={headers}
@@ -117,7 +96,7 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
             enableActions
             onDelete={handleProductDelete}
             onDetail={handleProductDetail}
-            onEdit={handleProductEdit}
+            onEdit={setUpdatingProduct}
 
         />
 
