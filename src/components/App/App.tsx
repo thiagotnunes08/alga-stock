@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import HomeView from '../../views/HomeView';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import NotFoundView from '../../views/NotFoundView';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<HomeView />}></Route>
+          <Route path='*' element={<NotFoundView />}></Route>
 
         </Routes>
 
