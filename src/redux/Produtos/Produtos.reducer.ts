@@ -2,7 +2,7 @@ import { Action } from ".."
 import Products, { Product } from "../../compartilhado/Table/Table.mockdata"
 
 
-export default function (state = Products, action: Action): Product[] {
+export default function (state:Product[] = [], action: Action): Product[] {
 
     switch (action.type) {
 
