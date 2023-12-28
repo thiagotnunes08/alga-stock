@@ -1,10 +1,14 @@
-
+// @ts-nocheck
+import Swal from "sweetalert2"
 import Button from "../../compartilhado/Button"
 import Form from "../../compartilhado/Form"
 import Input from "../../compartilhado/Input"
 import React, { useState } from 'react'
+import { login } from "../../redux/Autenticacao/Autenticacao.actions"
+import { useDispatch } from "react-redux"
 
 const LoginForm = () => {
+    const dispatch = useDispatch()
     const [form, setForm] = useState({
         user: '',
         pass: ''
@@ -19,8 +23,17 @@ const LoginForm = () => {
         })
     }
 
-    const handleLogin = () => {
-        console.table(form)
+    const handleLogin = async () => {
+        try {
+            await dispatch(login(form))
+            
+        } catch (error) {
+            Swal.fire(
+            'Error',
+             error.response?.data?.message || error.message,
+            'error'
+            )
+        }
     }
 
     return <Form title="Login - AlgaStock" onSubmit={handleLogin}>

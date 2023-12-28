@@ -4,17 +4,17 @@ import http from '../utils/http'
 
 export const getAll = () =>
 http
-.get<Product[]>('http://localhost:3024/products')
+.get<Product[]>('/products')
 .then(response=> response.data)
 
 
 export const create = (newProdutoForm: ProductCreator) =>
 http
-.post('http://localhost:3024/products',newProdutoForm)
+.post('/products',newProdutoForm)
 
 export const update = ({_id,name,price,stock}: Product) =>
 http
-.patch(`http://localhost:3024/products/${_id}`,{
+.patch(`/products/${_id}`,{
 
     ...(name && {name}),
     ...(price && {price}),
@@ -23,4 +23,4 @@ http
 
 export const deleteSingleProduct = (id: string) =>
 http
-.delete(`http://localhost:3024/products/${id}`)
+.delete(`/products/${id}`)
