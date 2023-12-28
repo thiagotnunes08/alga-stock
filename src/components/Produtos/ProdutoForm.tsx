@@ -4,6 +4,7 @@ import Form from '../../compartilhado/Form'
 import Input from '../../compartilhado/Input'
 import Button from '../../compartilhado/Button'
 import { Product } from '../../compartilhado/Table/Table.mockdata'
+import withPermission from '../../utils/HOC/withPermission'
 
 declare interface InitialFormState {
   _id?: string
@@ -122,4 +123,4 @@ const ProductForm: React.FC<ProductFormProps> = (props) => {
   </Form>
 }
 
-export default ProductForm
+export default withPermission(['admin','customer'],'/') (ProductForm)
