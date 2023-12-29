@@ -35,6 +35,7 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
 
     useEffect(() => {
         fectData()
+        // eslint-disable-next-line
     }, [])
 
     async function fectData() {
