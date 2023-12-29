@@ -1,8 +1,6 @@
 import React from 'react'
 import './Header.css'
 
-import { Product } from '../../compartilhado/Table/Table.mockdata'
-
 declare interface HeaderProps {
     title: string
 }

@@ -1,8 +1,8 @@
 import { Action } from ".."
-import Products, { Product } from "../../compartilhado/Table/Table.mockdata"
+import { ProductCreator } from "../../components/Produtos/ProdutoForm"
 
-
-export default function (state:Product[] = [], action: Action): Product[] {
+// eslint-disable-next-line
+export default function (state:ProductCreator[] = [], action: Action): ProductCreator[] {
 
     switch (action.type) {
 
