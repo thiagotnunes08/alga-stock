@@ -4,7 +4,7 @@ import { store } from "../redux";
 
 
 const http = axios.create({
-    baseURL: 'http://localhost:3024',
+    baseURL: 'https://jovial-nasturtium-b272ac',
     headers: {
       authorization: 'Bearer 123'
     }
