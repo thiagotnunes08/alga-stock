@@ -6,6 +6,7 @@ import Input from "../../compartilhado/Input"
 import React, { useState } from 'react'
 import { login } from "../../redux/Autenticacao/Autenticacao.actions"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -13,6 +14,9 @@ const LoginForm = () => {
         user: '',
         pass: ''
     })
+
+    const navigate = useNavigate()
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target
@@ -26,7 +30,7 @@ const LoginForm = () => {
     const handleLogin = async () => {
         try {
             await dispatch(login(form))
-            
+            navigate('/')
         } catch (error) {
             Swal.fire(
             'Error',
