@@ -30,7 +30,7 @@ const LoginForm = () => {
     const handleLogin = async () => {
         try {
             await dispatch(login(form))
-            navigate('/')
+            navigate('/products')
         } catch (error) {
             Swal.fire(
             'Error',
