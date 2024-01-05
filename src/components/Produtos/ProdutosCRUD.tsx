@@ -7,6 +7,8 @@ import Swal from 'sweetalert2'
 import { connect, useDispatch } from 'react-redux'
 import { criaNovoProduto, getProducts, updateProduct ,deletaProduto} from '../../redux/Produtos/Produtos.actions';
 import { RootState, ThunkDispatch } from '../../redux';
+import {useLocation, useParams,useNavigate } from 'react-router-dom';
+
 
 
 declare interface ProductCRUDProps {
@@ -26,6 +28,12 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
 
     const dispatch:ThunkDispatch = useDispatch();
 
+    const params = useParams<{id?:string}>()
+
+    const location = useLocation()
+
+    const navigate = useNavigate()
+
     const alertDeErro = (error:Error) => {
 
        return Swal.fire('Oops!', error.message, 'error')
@@ -33,6 +41,13 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
 
     const [updatingProduct, setUpdatingProduct] = useState<Product | undefined>(undefined)
 
+    useEffect(() => {
+        setUpdatingProduct(
+          params.id
+            ? props.products.find(product => product._id === params.id)
+            : undefined
+        )
+      }, [params, props.products])
     useEffect(() => {
         fectData()
         // eslint-disable-next-line
@@ -44,13 +59,13 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
       }
 
     const handleProductSubmit = async (product: ProductCreator) => {
-       
+
           dispatch(criaNovoProduto(product)).catch(alertDeErro)
     
       }
 
     const handleProductUpdate = async (newProduct: Product) => {
-    
+
             dispatch(updateProduct(newProduct))
             .then(() =>  setUpdatingProduct(undefined))
             .catch(alertDeErro)
@@ -97,7 +112,12 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
             enableActions
             onDelete={handleProductDelete}
             onDetail={handleProductDetail}
-            onEdit={setUpdatingProduct}
+            onEdit={product => {
+                navigate({
+                  pathname: `/products/${product._id}`,
+                  search: location.search
+                })
+              }}
             itensPerPage={5}
 
         />

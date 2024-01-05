@@ -14,7 +14,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' index element={<Navigate to="/products" />}/>
-          <Route path='/products' element={<ProductsView />}></Route>
+          <Route path='/products' element={<ProductsView />}>
+            <Route path=':id'/>
+          </Route>
           <Route path='/login' element={<LoginView />}></Route>
           <Route path='/profile' element={<ProfileView />}></Route>
           <Route path='*' element={<NotFoundView />}></Route>
