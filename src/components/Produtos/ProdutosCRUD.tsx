@@ -98,6 +98,7 @@ const CrudProdutos: React.FC<ProductCRUDProps> = (props) => {
             onDelete={handleProductDelete}
             onDetail={handleProductDetail}
             onEdit={setUpdatingProduct}
+            itensPerPage={5}
 
         />
 

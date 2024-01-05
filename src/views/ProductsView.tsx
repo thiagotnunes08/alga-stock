@@ -3,7 +3,7 @@ import Header from "../components/Header"
 import ProdutosCRUD from "../components/Produtos/ProdutosCRUD"
 
 
-const HomeView = () => {
+const ProductsView = () => {
 
     return <>
         <Header title="AlgaStock" />
@@ -14,4 +14,4 @@ const HomeView = () => {
 
 }
 
-export default HomeView
+export default ProductsView
